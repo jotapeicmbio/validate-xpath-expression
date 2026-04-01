@@ -1,0 +1,25 @@
+{
+    "name": "icmbio/validate-xpath-expression",
+    "type": "library",
+    "config": {
+        "platform": {
+            "php": "8.2.29"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Icmbio\\ValidateXpathExpression\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "João Pedro Garcia",
+            "email": "joao.garcia.bolsista@icmbio.gov.br"
+        }
+    ],
+    "require": {}
+}
