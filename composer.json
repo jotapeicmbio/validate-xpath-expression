@@ -2,6 +2,7 @@
     "name": "icmbio/validate-xpath-expression",
     "type": "library",
     "scripts": {
+        "repl": "php bin/xpath-repl",
         "test": "vendor/bin/phpunit --testdox",
         "test:coverage": "sh tools/test-coverage.sh",
         "stan": "vendor/bin/phpstan analyse --memory-limit=1G --no-progress --debug",
@@ -22,6 +23,9 @@
         "phpstan/phpstan-phpunit": "^2.0"
     },
     "license": "MIT",
+    "bin": [
+        "bin/xpath-repl"
+    ],
     "autoload": {
         "files": [
             "src/helpers.php"

@@ -5,3 +5,4 @@ composer.lock
 .codex
 /coverage/
 /var/
+.xpath-repl_history

@@ -151,6 +151,7 @@ These pages are also suitable as a base for a GitHub Wiki.
 Useful commands:
 
 ```bash
+composer repl
 composer test
 composer test:coverage
 composer stan
@@ -174,6 +175,29 @@ To enable the local Git hooks:
 ```bash
 git config core.hooksPath .githooks
 ```
+
+## REPL
+
+The repository ships with a simple REPL for trying expressions against the loaded project runtime:
+
+```bash
+composer repl
+```
+
+Inside the REPL you can call:
+
+- `validate(...)`
+- `escape_expression(...)`
+- `Xpath::validate(...)`
+- `new Xpath(...)->execute()`
+
+Special commands:
+
+- `:help`
+- `:clear`
+- `:quit`
+
+If `readline` is available, the REPL also provides command history and basic autocomplete.
 
 ## License
 
