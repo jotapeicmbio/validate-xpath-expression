@@ -1,13 +1,25 @@
 {
     "name": "icmbio/validate-xpath-expression",
     "type": "library",
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox",
+        "test:coverage": "sh tools/test-coverage.sh",
+        "stan": "vendor/bin/phpstan analyse --memory-limit=1G --no-progress --debug",
+        "check": [
+            "@stan",
+            "@test"
+        ]
+    },
     "config": {
+        "sort-packages": true,
         "platform": {
             "php": "8.2.29"
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^11.5"
+        "phpunit/phpunit": "^11.5",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-phpunit": "^2.0"
     },
     "license": "MIT",
     "autoload": {
