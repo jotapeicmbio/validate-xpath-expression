@@ -40,5 +40,6 @@
             "email": "joao.garcia.bolsista@icmbio.gov.br"
         }
     ],
-    "require": {}
+    "require": {},
+    "minimum-stability": "stable"
 }
