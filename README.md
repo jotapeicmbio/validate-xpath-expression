@@ -135,10 +135,31 @@ These pages are also suitable as a base for a GitHub Wiki.
 
 ## Development
 
-Run tests with:
+Useful commands:
 
 ```bash
-vendor/bin/phpunit --testdox
+composer test
+composer test:coverage
+composer stan
+composer check
+```
+
+`composer test:coverage` requires a local coverage driver such as `pcov` or `xdebug`.
+
+## Local guard rails
+
+This repository includes a few guard rails for safer development:
+
+- `phpstan` for static analysis
+- PHPUnit for automated tests
+- coverage generation when `pcov` or `xdebug` is available locally
+- versioned Git hooks under [`.githooks`](./.githooks)
+- GitHub Actions CI under [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)
+
+To enable the local Git hooks:
+
+```bash
+git config core.hooksPath .githooks
 ```
 
 ## License
