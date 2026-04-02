@@ -4,8 +4,17 @@ namespace Icmbio\ValidateXpathExpression;
 
 use RuntimeException;
 
+/**
+ * @phpstan-type ExpressionToken array{
+ *     type: 'operator'|'symbol'|'number'|'string'|'identifier',
+ *     value: int|float|string
+ * }
+ */
 class ExpressionTokenizer
 {
+    /**
+     * @return list<ExpressionToken>
+     */
     public function tokenize(string $expression): array
     {
         $length = strlen($expression);
@@ -58,6 +67,9 @@ class ExpressionTokenizer
         return $tokens;
     }
 
+    /**
+     * @return ExpressionToken
+     */
     protected function readNumberToken(string $expression, int &$position): array
     {
         $remaining = substr($expression, $position);
@@ -79,6 +91,9 @@ class ExpressionTokenizer
         ];
     }
 
+    /**
+     * @return ExpressionToken
+     */
     protected function readStringToken(string $expression, int &$position): array
     {
         $quote = $expression[$position];
@@ -124,6 +139,9 @@ class ExpressionTokenizer
         return stripcslashes($value);
     }
 
+    /**
+     * @return ExpressionToken
+     */
     protected function readIdentifierToken(string $expression, int &$position): array
     {
         $remaining = substr($expression, $position);

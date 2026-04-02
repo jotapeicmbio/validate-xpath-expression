@@ -9,6 +9,9 @@ class ExpressionPreparer
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     public function prepare(string $expression, mixed $value, array $context): string
     {
         $expression = $this->replaceCurrentValue($expression, $value);
@@ -27,6 +30,9 @@ class ExpressionPreparer
         );
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     protected function replaceContextVariables(string $expression, array $context): string
     {
         return preg_replace_callback(

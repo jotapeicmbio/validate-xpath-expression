@@ -12,7 +12,7 @@ class XpathRejectionTest extends TestCase
 {
     #[Test]
     #[DataProvider('rejectedByPublicApiProvider')]
-    public function it_rejects_invalid_expressions_through_public_api(string $expression)
+    public function it_rejects_invalid_expressions_through_public_api(string $expression): void
     {
         $this->expectException(RuntimeException::class);
 
@@ -21,13 +21,16 @@ class XpathRejectionTest extends TestCase
 
     #[Test]
     #[DataProvider('invalidArityThroughPublicApiProvider')]
-    public function it_rejects_invalid_function_arity_through_public_api(string $expression)
+    public function it_rejects_invalid_function_arity_through_public_api(string $expression): void
     {
         $this->expectException(RuntimeException::class);
 
         Xpath::validate($expression, 10);
     }
 
+    /**
+     * @return array<string, array{0: string}>
+     */
     public static function rejectedByPublicApiProvider(): array
     {
         return [
@@ -46,6 +49,9 @@ class XpathRejectionTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: string}>
+     */
     public static function invalidArityThroughPublicApiProvider(): array
     {
         return [

@@ -3,11 +3,15 @@
 namespace Icmbio\ValidateXpathExpression;
 
 use ReflectionClass;
-use Throwable;
 use RuntimeException;
+use Throwable;
 
+/**
+ * @phpstan-import-type ExpressionToken from ExpressionTokenizer
+ */
 class ExpressionEvaluator
 {
+    /** @var list<ExpressionToken> */
     protected array $tokens = [];
     protected int $position = 0;
 
@@ -73,14 +77,32 @@ class ExpressionEvaluator
 
         while ($token = $this->matchValues(['==', '!=', '<', '<=', '>', '>='])) {
             $right = $this->parseAdditiveExpression();
-            $left = match ($token['value']) {
-                '==' => $left == $right,
-                '!=' => $left != $right,
-                '<' => $left < $right,
-                '<=' => $left <= $right,
-                '>' => $left > $right,
-                '>=' => $left >= $right,
-            };
+            if ($token['value'] === '==') {
+                $left = $left == $right;
+                continue;
+            }
+
+            if ($token['value'] === '!=') {
+                $left = $left != $right;
+                continue;
+            }
+
+            if ($token['value'] === '<') {
+                $left = $left < $right;
+                continue;
+            }
+
+            if ($token['value'] === '<=') {
+                $left = $left <= $right;
+                continue;
+            }
+
+            if ($token['value'] === '>') {
+                $left = $left > $right;
+                continue;
+            }
+
+            $left = $left >= $right;
         }
 
         return $left;
@@ -104,11 +126,17 @@ class ExpressionEvaluator
 
         while ($token = $this->matchValues(['*', '/', '%'])) {
             $right = $this->parseUnaryExpression();
-            $left = match ($token['value']) {
-                '*' => $left * $right,
-                '/' => $left / $right,
-                '%' => $left % $right,
-            };
+            if ($token['value'] === '*') {
+                $left = $left * $right;
+                continue;
+            }
+
+            if ($token['value'] === '/') {
+                $left = $left / $right;
+                continue;
+            }
+
+            $left = $left % $right;
         }
 
         return $left;
@@ -176,6 +204,9 @@ class ExpressionEvaluator
         };
     }
 
+    /**
+     * @param list<mixed> $arguments
+     */
     protected function invokeFunction(string $name, array $arguments): mixed
     {
         $handler = $this->functionRegistry->resolve($name);
@@ -184,6 +215,10 @@ class ExpressionEvaluator
         return (new $handler(...$arguments))->handle();
     }
 
+    /**
+     * @param class-string $handler
+     * @param list<mixed> $arguments
+     */
     protected function assertValidFunctionArity(string $handler, array $arguments, string $functionName): void
     {
         $constructor = (new ReflectionClass($handler))->getConstructor();
@@ -205,6 +240,9 @@ class ExpressionEvaluator
         }
     }
 
+    /**
+     * @return ExpressionToken
+     */
     protected function consume(string $value, string $message): array
     {
         if ($this->checkValue($value)) {
@@ -214,6 +252,9 @@ class ExpressionEvaluator
         throw new RuntimeException($message);
     }
 
+    /**
+     * @return ExpressionToken
+     */
     protected function consumeType(string $type, string $message): array
     {
         $token = $this->currentToken();
@@ -236,6 +277,10 @@ class ExpressionEvaluator
         return false;
     }
 
+    /**
+     * @param list<string> $values
+     * @return ExpressionToken|null
+     */
     protected function matchValues(array $values): ?array
     {
         foreach ($values as $value) {
@@ -254,6 +299,9 @@ class ExpressionEvaluator
         return $token !== null && $token['value'] === $value;
     }
 
+    /**
+     * @return ExpressionToken|null
+     */
     protected function currentToken(): ?array
     {
         return $this->tokens[$this->position] ?? null;

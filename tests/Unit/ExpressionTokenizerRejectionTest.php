@@ -12,13 +12,16 @@ class ExpressionTokenizerRejectionTest extends TestCase
 {
     #[Test]
     #[DataProvider('invalidExpressionProvider')]
-    public function it_rejects_invalid_tokens_during_tokenization(string $expression)
+    public function it_rejects_invalid_tokens_during_tokenization(string $expression): void
     {
         $this->expectException(RuntimeException::class);
 
         (new ExpressionTokenizer())->tokenize($expression);
     }
 
+    /**
+     * @return array<string, array{0: string}>
+     */
     public static function invalidExpressionProvider(): array
     {
         return [

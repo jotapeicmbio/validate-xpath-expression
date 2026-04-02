@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class FunctionRegistryTest extends TestCase
 {
     #[Test]
-    public function it_documents_function_registry_resolution()
+    public function it_documents_function_registry_resolution(): void
     {
         $registry = new FunctionRegistry();
 

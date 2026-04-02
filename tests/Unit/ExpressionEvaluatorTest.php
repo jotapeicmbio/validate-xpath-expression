@@ -12,7 +12,7 @@ use RuntimeException;
 class ExpressionEvaluatorTest extends TestCase
 {
     #[Test]
-    public function it_documents_expression_evaluator_behavior()
+    public function it_documents_expression_evaluator_behavior(): void
     {
         $evaluator = new ExpressionEvaluator(new FunctionRegistry(), new ExpressionTokenizer());
 
@@ -20,7 +20,7 @@ class ExpressionEvaluatorTest extends TestCase
     }
 
     #[Test]
-    public function it_wraps_expression_evaluation_errors()
+    public function it_wraps_expression_evaluation_errors(): void
     {
         $this->expectException(RuntimeException::class);
 

@@ -2,13 +2,20 @@
 
 namespace Icmbio\ValidateXpathExpression;
 
+/**
+ * @phpstan-consistent-constructor
+ */
 class Xpath
 {
     protected string $expression;
     protected mixed $value;
+    /** @var array<string, mixed> */
     protected array $context;
     protected bool $returnsBool;
 
+    /**
+     * @param array<string, mixed> $context
+     */
     public function __construct(string $expression, mixed $value, array $context = [], bool $returnsBool = true)
     {
         $this->expression = $expression;
@@ -17,7 +24,10 @@ class Xpath
         $this->returnsBool = $returnsBool;
     }
 
-    public static function validate(string $expression, mixed $value, array $context = [], bool $returnsBool = true)
+    /**
+     * @param array<string, mixed> $context
+     */
+    public static function validate(string $expression, mixed $value, array $context = [], bool $returnsBool = true): mixed
     {
         return (new static(
             expression: $expression,
@@ -32,7 +42,7 @@ class Xpath
         return str_replace('${', '\${', $expr);
     }
 
-    public function execute()
+    public function execute(): mixed
     {
         $preparer = new ExpressionPreparer($this->functionRegistry());
         $expr = $preparer->prepare($this->expression, $this->value, $this->context);

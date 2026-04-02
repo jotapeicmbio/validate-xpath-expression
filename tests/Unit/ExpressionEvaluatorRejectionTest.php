@@ -14,7 +14,7 @@ class ExpressionEvaluatorRejectionTest extends TestCase
 {
     #[Test]
     #[DataProvider('invalidExpressionProvider')]
-    public function it_rejects_invalid_expressions_during_evaluation(string $expression)
+    public function it_rejects_invalid_expressions_during_evaluation(string $expression): void
     {
         $this->expectException(RuntimeException::class);
 
@@ -23,7 +23,7 @@ class ExpressionEvaluatorRejectionTest extends TestCase
 
     #[Test]
     #[DataProvider('invalidArityProvider')]
-    public function it_rejects_function_calls_with_invalid_arity(string $expression)
+    public function it_rejects_function_calls_with_invalid_arity(string $expression): void
     {
         $this->expectException(RuntimeException::class);
 
@@ -35,6 +35,9 @@ class ExpressionEvaluatorRejectionTest extends TestCase
         return new ExpressionEvaluator(new FunctionRegistry(), new ExpressionTokenizer());
     }
 
+    /**
+     * @return array<string, array{0: string}>
+     */
     public static function invalidExpressionProvider(): array
     {
         return [
@@ -61,6 +64,9 @@ class ExpressionEvaluatorRejectionTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: string}>
+     */
     public static function invalidArityProvider(): array
     {
         return [

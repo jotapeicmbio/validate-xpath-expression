@@ -46,6 +46,9 @@ class FunctionRegistry
         'substring-before' => SubstringBeforeFunction::class,
     ];
 
+    /**
+     * @return array<string, class-string>
+     */
     public function all(): array
     {
         return self::FUNCTIONS;

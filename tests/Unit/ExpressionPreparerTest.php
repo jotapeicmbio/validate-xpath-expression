@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class ExpressionPreparerTest extends TestCase
 {
     #[Test]
-    public function it_documents_expression_preparation_behavior()
+    public function it_documents_expression_preparation_behavior(): void
     {
         $preparer = new ExpressionPreparer(new FunctionRegistry());
 

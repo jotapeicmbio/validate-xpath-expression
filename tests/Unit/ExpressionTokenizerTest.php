@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class ExpressionTokenizerTest extends TestCase
 {
     #[Test]
-    public function it_documents_expression_tokenization_behavior()
+    public function it_documents_expression_tokenization_behavior(): void
     {
         $tokens = (new ExpressionTokenizer())->tokenize("floor(10.7) == '10'");
 

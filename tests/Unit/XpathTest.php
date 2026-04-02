@@ -9,20 +9,20 @@ use Icmbio\ValidateXpathExpression\Xpath;
 class XpathTest extends TestCase
 {
     #[Test]
-    public function it_validates_number_ranges()
+    public function it_validates_number_ranges(): void
     {
         $this->assertTrue(Xpath::validate('. >= 1 and . <= 100', 10));
         $this->assertFalse(Xpath::validate('. >= 1 and . <= 100', 150));
     }
 
     #[Test]
-    public function it_validates_boolean_inversion()
+    public function it_validates_boolean_inversion(): void
     {
         $this->assertTrue(Xpath::validate('not(. >= 1 and . <= 100)', -10));
     }
 
     #[Test]
-    public function it_validates_floor_function()
+    public function it_validates_floor_function(): void
     {
         $this->assertTrue(Xpath::validate('floor(.) = 4', 4.7));
         $this->assertTrue(Xpath::validate('floor(.) = 5', 5.7));
@@ -30,28 +30,28 @@ class XpathTest extends TestCase
     }
 
     #[Test]
-    public function it_ceiling_floor_function()
+    public function it_ceiling_floor_function(): void
     {
         $this->assertTrue(Xpath::validate('ceiling(.) = 5', 4.3));
         $this->assertTrue(Xpath::validate('ceiling(.) = 7', 6.2));
     }
 
     #[Test]
-    public function it_validates_string_length()
+    public function it_validates_string_length(): void
     {
         $this->assertTrue(Xpath::validate('string-length(.) = 7', "abacate"));
         $this->assertFalse(Xpath::validate('string-length(.) = 5', "abacate"));
     }
 
     #[Test]
-    public function it_supports_variable_interpolation()
+    public function it_supports_variable_interpolation(): void
     {
         $this->assertTrue(Xpath::validate('. >= ${min} and . <= ${max}', 10, ["min" => 1, "max" => 100]));
         $this->assertFalse(Xpath::validate('. >= ${min} and . <= ${max}', 0, ["min" => 1, "max" => 100]));
     }
 
     #[Test]
-    public function it_returns_non_boolean_when_requested()
+    public function it_returns_non_boolean_when_requested(): void
     {
         $this->assertSame(7, Xpath::validate('string-length(.)', "abacate", [], false));
         $this->assertTrue(Xpath::validate('string_length(.) = 11', "40258997853"));
@@ -60,34 +60,34 @@ class XpathTest extends TestCase
     }
 
     #[Test]
-    public function it_validates_number_functions()
+    public function it_validates_number_functions(): void
     {
         $this->assertTrue(Xpath::validate('number(.) = 3.2', 3.2));
         $this->assertTrue(Xpath::validate('number(string(.)) = 6', 6));
     }
 
     #[Test]
-    public function it_validates_choose_function()
+    public function it_validates_choose_function(): void
     {
         $this->assertTrue(Xpath::validate('choose(true(), 1, 2) = 1', null));
         $this->assertTrue(Xpath::validate('choose(false(), 1, 2) = 2', null));
     }
 
     #[Test]
-    public function it_validates_int_function()
+    public function it_validates_int_function(): void
     {
         $this->assertTrue(Xpath::validate('int(.) = 4', 4.7));
     }
 
     #[Test]
-    public function it_validates_contains_function()
+    public function it_validates_contains_function(): void
     {
         $this->assertTrue(Xpath::validate('contains("abc", .)', "b"));
         $this->assertFalse(Xpath::validate('contains("abc", .)', "e"));
     }
 
     #[Test]
-    public function it_validates_comparison_operators()
+    public function it_validates_comparison_operators(): void
     {
         $this->assertTrue(Xpath::validate('5 < .', 10));
         $this->assertFalse(Xpath::validate('5 > .', 10));
@@ -98,14 +98,14 @@ class XpathTest extends TestCase
     }
 
     #[Test]
-    public function it_validates_boolean_expressions()
+    public function it_validates_boolean_expressions(): void
     {
         $this->assertTrue(Xpath::validate('true() or false()', null));
         $this->assertFalse(Xpath::validate('false() or false()', null));
     }
 
     #[Test]
-    public function it_validates_arithmetic_expressions()
+    public function it_validates_arithmetic_expressions(): void
     {
         $this->assertTrue(Xpath::validate('(. div 5) = 2', 10));
         $this->assertTrue(Xpath::validate('(. * 5) = 50', 10));
@@ -115,7 +115,7 @@ class XpathTest extends TestCase
     }
 
     #[Test]
-    public function it_validates_mod_function()
+    public function it_validates_mod_function(): void
     {
         $this->assertTrue(Xpath::validate('(. mod 2) = 0', 10));
         $this->assertTrue(Xpath::validate('(. mod 2) = 1', 11));
@@ -124,7 +124,7 @@ class XpathTest extends TestCase
     }
 
     #[Test]
-    public function it_validates_range()
+    public function it_validates_range(): void
     {
         $this->assertTrue(Xpath::validate('. >= ${min} and . <= ${max}', 10, ["max" => 100, "min" => 10]));
         $this->assertFalse(Xpath::validate('. >= ${min} and . <= ${max}', 10, ["max" => 100, "min" => 20]));
@@ -132,7 +132,7 @@ class XpathTest extends TestCase
     }
 
     #[Test]
-    public function it_validates_string_functions()
+    public function it_validates_string_functions(): void
     {
         $this->assertTrue(Xpath::validate('substring-after("aa&bb", ${sep}) = "bb"', "&", ['sep' => '&']));
         $this->assertTrue(Xpath::validate('substring-before("aa&bb", ${sep}) = "aa"', "&", ['sep' => '&']));
@@ -142,7 +142,7 @@ class XpathTest extends TestCase
     }
 
     #[Test]
-    public function it_validates_date_functions()
+    public function it_validates_date_functions(): void
     {
         $this->assertTrue(Xpath::validate("int(format-date-time(., '%H')) = 19", '2019-05-14T19:13:35.450686Z'));
         $this->assertTrue(Xpath::validate("int(format-date-time(., '%m')) = 5", '2019-05-14T19:13:35.450686Z'));
@@ -153,14 +153,14 @@ class XpathTest extends TestCase
     }
 
     #[Test]
-    public function it_validates_selected_function()
+    public function it_validates_selected_function(): void
     {
         $this->assertTrue(Xpath::validate("selected('peixe abacate', .)", 'peixe'));
         $this->assertTrue(Xpath::validate("selected('peixe abacate', 'peixe')", null));
     }
 
     #[Test]
-    public function it_validates_uuid_function()
+    public function it_validates_uuid_function(): void
     {
         $this->assertMatchesRegularExpression(
             '/^[0-9a-f\-]{36}$/',
