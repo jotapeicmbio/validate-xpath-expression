@@ -23,6 +23,9 @@
     },
     "license": "MIT",
     "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
         "psr-4": {
             "Icmbio\\ValidateXpathExpression\\": "src/"
         }

@@ -58,6 +58,19 @@ $length = Xpath::validate('string-length(.)', 'abacate', [], false);
 var_dump($length); // 7
 ```
 
+Se você preferir uma API em estilo função, mais próxima da ergonomia inspirada na versão em Python, o pacote também expõe helpers namespaced:
+
+```php
+<?php
+
+use function Icmbio\ValidateXpathExpression\validate;
+
+$isValid = validate('. >= ${min} and . <= ${max}', 10, [
+    'min' => 1,
+    'max' => 100,
+]);
+```
+
 ## Modelo de expressão suportado
 
 Esta biblioteca suporta intencionalmente um subconjunto focado, e não XPath completo.
