@@ -1,3 +1,5 @@
 .tool-versions
 /vendor/
 composer.lock
+.phpunit.result.cache
+.codex
