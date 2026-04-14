@@ -167,4 +167,12 @@ class XpathTest extends TestCase
             Xpath::validate("uuid()", null, [], false)
         );
     }
+
+    #[Test]
+    public function it_dont_should_validate(): void
+    {
+        $this->assertFalse(
+            Xpath::validate(". >= 18", 'dez')
+        );
+    }
 }

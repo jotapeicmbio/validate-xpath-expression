@@ -27,4 +27,12 @@ class ExpressionEvaluatorTest extends TestCase
         (new ExpressionEvaluator(new FunctionRegistry(), new ExpressionTokenizer()))
             ->evaluate('invalid php syntax ???');
     }
+
+    #[Test]
+    public function it_returns_false_for_order_comparisons_with_non_numeric_strings(): void
+    {
+        $evaluator = new ExpressionEvaluator(new FunctionRegistry(), new ExpressionTokenizer());
+
+        $this->assertFalse($evaluator->evaluate("'dez' >= 18"));
+    }
 }

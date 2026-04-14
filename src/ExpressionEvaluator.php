@@ -87,25 +87,54 @@ class ExpressionEvaluator
                 continue;
             }
 
+            $comparison = $this->compareOrderableValues($left, $right);
+
+            if ($comparison === null) {
+                $left = false;
+                continue;
+            }
+
             if ($token['value'] === '<') {
-                $left = $left < $right;
+                $left = $comparison < 0;
                 continue;
             }
 
             if ($token['value'] === '<=') {
-                $left = $left <= $right;
+                $left = $comparison <= 0;
                 continue;
             }
 
             if ($token['value'] === '>') {
-                $left = $left > $right;
+                $left = $comparison > 0;
                 continue;
             }
 
-            $left = $left >= $right;
+            $left = $comparison >= 0;
         }
 
         return $left;
+    }
+
+    protected function compareOrderableValues(mixed $left, mixed $right): ?int
+    {
+        if ($this->isNumericValue($left) && $this->isNumericValue($right)) {
+            return ($left <=> $right);
+        }
+
+        if (is_string($left) && is_string($right)) {
+            return strcmp($left, $right);
+        }
+
+        if (is_bool($left) && is_bool($right)) {
+            return ($left <=> $right);
+        }
+
+        return null;
+    }
+
+    protected function isNumericValue(mixed $value): bool
+    {
+        return is_int($value) || is_float($value) || (is_string($value) && is_numeric($value));
     }
 
     protected function parseAdditiveExpression(): mixed
