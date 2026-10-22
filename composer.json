@@ -14,7 +14,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "^8.5"
+            "php": "8.5.12"
         }
     },
     "require-dev": {
